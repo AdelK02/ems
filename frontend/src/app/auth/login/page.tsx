@@ -26,7 +26,8 @@ export default function LoginPage() {
       toast.success('Successfully logged in!');
       router.push('/dashboard');
     } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Login failed. Please check credentials.');
+      const errorMsg = err.response?.data?.message || err.message || 'Login failed. Please check credentials.';
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
