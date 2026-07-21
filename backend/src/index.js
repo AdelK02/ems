@@ -33,7 +33,20 @@ if (!fs.existsSync(uploadsDir)) {
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: (origin, callback) => {
+      const configuredOrigins = (process.env.CORS_ORIGIN || '*').split(',').map((s) => s.trim());
+      if (
+        !origin ||
+        configuredOrigins.includes('*') ||
+        configuredOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost')
+      ) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
   })
 );
