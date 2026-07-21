@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: ems-backend
+    env: node
+    region: singapore
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: node src/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
